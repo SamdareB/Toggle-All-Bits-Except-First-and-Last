@@ -1,0 +1,55 @@
+For the Given Integer N toggle(change 0 into 1 and vice versa) all middle bits Except first and last.
+Example: N = 10, Binary representation of 10 is 1010
+after toggling all middle bits 1100
+
+C++ Code:
+#include <bits/stdc++.h>
+using namespace std;
+//Function to get all middle bits and set it to 1.
+int getMiddleBits(int N){
+	
+N|= N>>1;
+      
+N|= N>>2;
+      
+N|= N>>4;
+      
+N|= N>>8;
+
+N|= N>>16;
+//set all middle bits to 1.     
+return(N>>1)^1;
+
+}
+//Function to toggle all middle bits except first and last.
+int toggleAllMiddleBits(int N){
+	if(N==1)
+	return 1;
+	
+	return(N^(getMiddleBits(N)));
+	
+}
+//Time complexity: O(log(N)
+//Space complexity:O(1)
+/*
+Another approach by taking mask of 2N-2
+and taking XOR of mask and N
+we can toggle all middle bits that is we can construct bit mask of the form 011..110 where all bits are set except first and last i.e 01111..11110 
+the number that greater than 4 or equal to 4 the bit mask is equal to 2N-2 we can calculate N by taking log2(N),for number less than 4 there is no middle bits 
+int toggleAllMiddleBits(int N){
+	if(N<4)
+	return N;
+	int mask = 1<<(int)log2(N)-2;
+	return mask^N;
+	
+}
+Time Complexity:O(1)
+Space Complexity:O(1)
+*/
+int main() {
+	// your code goes here
+	int N;
+	cin>>N;
+	cout<<toggleAllMiddleBits(N)<<endl;
+	return 0;
+}
